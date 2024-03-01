@@ -1,9 +1,14 @@
 ﻿using Assignment_task_2.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Assignment_task_2.Controllers
 {
+    [Authorize]
     public class AddController : Controller
     {
         private readonly DataBaseConnect _context;
@@ -22,25 +27,28 @@ namespace Assignment_task_2.Controllers
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
-        [HttpPost]
 
-        public IActionResult SignIn(string email, string password)
-        {
 
-            var user = _context.Customers.FirstOrDefault(u => u.email == email);
+        //public IActionResult SignIn(string email, string password)
+        //{
 
-            if (user != null && (password == user.password))
-            {
+        //    var user = _context.Customers.FirstOrDefault(u => u.email == email);
 
-                return RedirectToAction("HomeIndex");
-            }
-            else
-            {
-                TempData["ErrorMessage"] = "Invalid Email or Password";
-                return RedirectToAction("Index1", "Home");
-            }
+        //    if (user != null && (password == user.password))
+        //    {
 
-        }
+        //        return RedirectToAction("HomeIndex");
+        //    }
+        //    else
+        //    {
+        //        TempData["ErrorMessage"] = "Invalid Email or Password";
+        //        return RedirectToAction("Index1", "Home");
+        //    }
+
+        //}
+
+       
+        
         public IActionResult HomeIndex()
         {
             return View();
