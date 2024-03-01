@@ -1,0 +1,176 @@
+﻿@model List<Ground>;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+ 
+    <link href="https://kendo.cdn.telerik.com/themes/6.7.0/default/default-main.css" rel="stylesheet" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/kendo.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ag-grid-community/dist/ag-grid-community.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2023.2.829/js/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.3.min.js"></script>
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/themes/6.7.0/default/default-main.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" integrity="sha384-4LISF5TTJX/fLmGSxO53rV4miRxdg84mZsxmO8Rx5jGtp/LbrixFETvWa5a6sESd" crossorigin="anonymous">
+
+
+
+    <title>Play Site</title>
+    <style>
+        .button {
+            margin-left:80px;
+        }
+        .heading{
+            text-align:center;
+            margin-top:70px;
+            margin-bottom:20px;
+            background-color:darkturquoise;
+        }
+
+        .ag-theme-quartz,
+        .ag-theme-quartz-dark {
+            --ag-foreground-color: black;
+            --ag-header-foreground-color: white;
+            --ag-header-background-color: #F08080;
+            --ag-font-size: 16px;
+        }
+        .ag-theme-alpine .ag-cell-value {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .ag-theme-quartz .ag-cell img {
+            width: 100%;
+            height: 100%;
+        }
+
+            .ag-theme-alpine .ag-cell-value span {
+                width: 100%;
+                text-align: center;
+            }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+
+        <img src="https://www.playspots.in//wp-content/uploads/2018/10/WHITE.png" width="100px" class="img" style="margin-left:7px" />
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <div class="navbar-nav ml-auto">
+              
+
+                <div class="nav-item active">
+                    <a class="nav-link  bi bi-lock h-5 w-5" href="/Home/Index1">User Login</a>
+                </div>
+                <div class="nav-item active">
+                    <a class="nav-link   bi bi-people h-5 w-5" href="/Admin/CustomerTable"> Registered User</a>
+                </div>
+                <div class="nav-item active">
+                    <a class="nav-link  bi bi-people h-5 w-5" href="/Admin/BookingTable"> Booking List</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+   
+    <h3 class="heading">All Turf Ground </h3>
+    <a class="button btn btn-primary  bi bi-plus-circle h-5 w-5" href="/Admin/AddGround"> Add Ground</a>
+    <button class="btn btn-danger " onclick="deleteData()">Delete Data</button>
+    <div id="myGrid" class="ag-theme-quartz mt-1" style="height: 600px; width:1100px; margin-left:80px;"></div>
+
+    <script>
+
+        const gridOptions = {
+            defaultColDef: {
+                rowHeight: 550, 
+            },
+            columnDefs: [
+                {
+                    field: "image",
+                    headerName: "Image",
+                    cellRenderer: function (params) {
+                        return '<img src="data:image/*;base64,' + params.value + '" />';
+                    },
+                    width: 150,
+                },
+                { field: "id", type: ['nonEditableColumn'], width: 140, checkboxSelection: true },
+                { field: "groundName" },
+                { field: "description", width: 220 },
+                { field: "location", width: 220 },
+                { field: "price" }
+               
+            ],
+
+            rowSelection: true,
+            pagination: true,
+            paginationPageSize: 10,
+            defaultColDef: {
+                filter: true,
+                editable: true,
+            },
+            onCellValueChanged: updateData,
+            singleClickEdit: true,
+            columnTypes: {
+                nonEditableColumn: { editable: false },
+            }
+        };
+
+        function showData() {
+            $.ajax({
+                url: "/Admin/Show",
+                method: "GET",
+                dataType: "json",
+                success: function (data) {
+                    gridOptions.api.setRowData(data);
+                }
+            });
+        }
+
+         function deleteData() {
+          
+            const selecteRow = gridOptions.api.getSelectedRows();
+            const id = selecteRow[0].id;
+
+            $.ajax({
+                url: '/Admin/DeleteData/' + id,
+                type: 'POST',
+                success: function (res) {
+                    if (res.success) {
+                        alert("Data Deleted Successfully");
+                    } else {
+                        alert("Data Not Deleted");
+                    }
+                }
+            });
+        }
+
+
+        function updateData(params) {
+
+            $.ajax({
+
+                url: '/Admin/UpdateData',
+                type: 'POST',
+                data: params.data,
+                dataType: 'json',
+                success: function (res) {
+                    if (res.success) {
+                        alert("Update data");
+
+                    }
+                }
+            })
+        }
+        showData();
+
+
+
+        const myGridElement = document.querySelector('#myGrid');
+        new agGrid.Grid(myGridElement, gridOptions);
+    </script>
+</body>
+</html>

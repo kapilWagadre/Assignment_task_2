@@ -1,0 +1,233 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <title>home</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" integrity="sha384-4LISF5TTJX/fLmGSxO53rV4miRxdg84mZsxmO8Rx5jGtp/LbrixFETvWa5a6sESd" crossorigin="anonymous">
+    <style>
+        body {
+            /* background-image: url('https://t3.ftcdn.net/jpg/01/31/22/84/240_F_131228401_Sx9CgNcjxxYEsLCN81KGN4LIu6zFPD0h.jpg'); */
+             background-size: cover; 
+            background-repeat: no-repeat; 
+          
+        }
+
+        .logo{
+            margin-top:66px;
+        }
+        .top{
+            margin-top:260px;
+        }
+        .detail{
+            color:white;
+            margin-left:90px;
+            font-size:40px;
+        }
+
+        .details {
+            color:lightgreen;
+            font-size: 30px;
+            margin-left:90px;
+        }
+
+        .image {
+           margin-top:250px;
+           margin-left:300px;
+        }
+
+        .btn{
+            margin-top:34px;
+            margin-left:140px;
+            width:150px;
+            height:40px;
+            background-color:lightskyblue;
+            color:black;
+        }
+        .main{
+            height:600px;
+            width:100%;
+            display:flex;
+            position:relative;
+        }
+        .box{
+            position:absolute;
+        }
+        .main img{
+            height:100%;
+            width: 100%;
+        }
+
+        .footer {
+            color: white;
+            background-color: darkslategrey;
+            margin-top:60px;
+            height:250px;
+        }
+
+        .view{
+         
+           width: 400px;
+           height:200px;
+           text-align:center;
+           margin-left:140px;
+        }
+
+        .container{
+            height:300px;
+        }
+       
+
+       
+    </style>
+    
+   
+   
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+
+        <img src="https://www.playspots.in//wp-content/uploads/2018/10/WHITE.png" width="100px" class="img" style="margin-left:7px" />
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <div class="navbar-nav ml-auto">
+                <div class="nav-item lefthead active">
+                    <a class="nav-link bi bi-house h-5 w-5 " href="/Add/HomeIndex"> Home</a>
+                </div>
+
+                <div class="nav-item active">
+                    <a class="nav-link  bi bi-lock h-5 w-5" href="/Home/Index1"> Logout</a>
+                </div>
+                <div class="nav-item active">
+                    <a class="nav-link bi bi-person-gear" href="/Admin/Adminlogin"> Admin </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+ 
+
+    <div class="main">
+        <img src="https://t3.ftcdn.net/jpg/01/31/22/84/240_F_131228401_Sx9CgNcjxxYEsLCN81KGN4LIu6zFPD0h.jpg"></img>
+        
+        <div class="box row">
+            <div class="col-6">
+                <h4 class="detail top">YOUR</h4>
+                <h4 class="detail">NEAREST</h4>
+                <h5 class="detail">SPORTS_COMMUNITY</h5>
+                <h5 class="details fw-bold">IS JUST A TAP AWAY</h5>
+                <div>
+                    <a id="Button" href="/Add/HomePage" class="btn btn-medium btn-dark text-uppercase btn-rounded">To Book Venue</a>
+                </div>
+
+            </div>
+            <div class="col-6">
+                  <img src=" https://www.playspots.in/wp-content/uploads/2020/02/meet-pals.png" class="image" style="width:250px; height:280px;"> 
+              
+                 
+            </div>
+            </div>
+        </div>
+
+    <div class="container row mt-3">
+        <div class="col-md-6 mt-5">
+            <div class="view mt-5">
+                <h3 class="bi bi-calendar-check-fill"></h3>
+                <h4>Book</h4>
+                <p>
+                    Once you’ve found the perfect ground, court or gym, Connect with the venue through the Book Now Button to make online booking.
+                </p>
+            </div>
+        </div>
+
+        <!-- Second Box -->
+        <div class="col-md-6 mt-5">
+            <div class="view mt-5">
+                <h3 class="bi bi-dribbble"></h3>
+                <h4>Play</h4>
+                <p>
+                    You’re the hero, you’ve found a stunning turf or court, booked with ease and now it's time to play. The scene is set for your epic match.
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="container row mt-4" style="margin-left:60px;">
+        <div class="col-md-3">
+            <div class="">
+                <img src="https://km-landing.s3.ap-south-1.amazonaws.com/Images/km-homePageNew/non-textCr.png" class="card-img-top" alt="Image 1">
+                <div class="card-body ml-4">
+                    <h5 class="card-title ml-5">Cricket</h5>
+                   
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="">
+                <img src="https://km-landing.s3.ap-south-1.amazonaws.com/Images/km-homePageNew/non-textFt.png" class="card-img-top" alt="Image 2">
+                <div class="card-body  ml-4">
+                    <h5 class="card-title  ml-5">Football</h5>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+          
+                <img src="~/css/img/Hocman1.jpg" style="height:290px; class="card-img-top" alt="Image 3">
+                <div class="card-body  ml-4">
+                    <h5 class="card-title  ml-5">Hockey</h5>
+                </div>
+           
+        </div>
+
+        <div class="col-md-3">
+            <div class="">
+                <img src="https://km-landing.s3.ap-south-1.amazonaws.com/Images/km-homePageNew/non-textBdm.png" class="card-img-top" alt="Image 4">
+                <div class="card-body  ml-4">
+                    <h5 class="card-title  ml-5">Badminton</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+     <footer id="footer" class="overflow-hidden footer">
+        <div class="container">
+            <div class="row">
+                <div class="footer-top-area">
+                    <div class="row d-flex flex-wrap justify-content-between">
+                        <div class="col-lg-4 mt-4  col-sm-6">
+                            <div class="footer-menu">
+                                <h3 style="font-family:cursive; margin-left:7px;">PlaySpots</h3>
+                                <p class="mt-2">Book your sports ground hassle-free with GroundBooker! Enjoy convenient online booking for your favorite sports venues. Explore special offers during sports events and tournaments. Reserve your spot with confidence! Our platform ensures a seamless experience for all your ground booking needs. </p>
+
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-sm-6 pb-3">
+                            <div class="footer-menu mt-5">
+                                <img src="https://www.playspots.in//wp-content/uploads/2018/10/WHITE.png" style="width:200px;margin-left:60px;" class="logo">
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-sm-6 pb-3">
+                            <div class="footer-menu mt-4 contact-item">
+                                <h5 class="widget-title text-uppercase pb-2 ml-5">Contact Us</h5>
+                                <p class=" ml-5">
+                                    Do you have any queries or suggestions? <a href="">kapil1114@gmail.com</a>
+                                </p>
+                                <p class=" ml-5">
+                                    If you need support? Just give us a call.<br /> <a href="">+91 8889756824</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+    </footer> 
+
+</body>
+</html>

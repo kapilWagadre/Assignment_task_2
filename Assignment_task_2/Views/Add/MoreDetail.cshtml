@@ -1,0 +1,380 @@
+﻿@model List<Ground>;
+
+
+<script src="https://kendo.cdn.telerik.com/2023.2.829/js/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.3.min.js"></script>
+<link rel="stylesheet" href="https://kendo.cdn.telerik.com/themes/6.7.0/default/default-main.css" />
+<script src="https://kendo.cdn.telerik.com/2023.2.829/js/kendo.all.min.js"></script>
+<script src="https://kendo.cdn.telerik.com/2023.2.829/mjs/kendo.all.js" type="module"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" integrity="sha384-4LISF5TTJX/fLmGSxO53rV4miRxdg84mZsxmO8Rx5jGtp/LbrixFETvWa5a6sESd" crossorigin="anonymous">
+
+<style>
+
+
+    .center {
+        margin-left: 500px;
+        margin-bottom: 20px;
+    }
+
+    .header {
+        margin-top: 65px;
+    }
+
+    .top {
+        margin-top: 30px;
+    }
+
+    form {
+        margin: auto;
+        backdrop-filter: blur(16px) saturate(180%);
+        -webkit-backdrop-filter: blur(16px) saturate(180%);
+        border-radius: 12px;
+        width: 100%;
+    }
+
+    .deatils {
+        margin-left: 60px;
+    }
+
+    .farm {
+        margin-left: 60px;
+        width: 380px;
+    }
+
+    .buttun {
+        margin-left: 70px;
+    }
+
+    .border {
+        box-sizing: border-box;
+    }
+
+    .description {
+        background-color: lightcyan;
+    }
+</style>
+
+
+<div class="modal fade" id="bookingModal" tabindex="-1" aria-labelledby="bookingModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="bookingModalLabel">Enter Your Information</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="selectedGroundInfo">
+                </div>
+                <form id="customerInfoForm">
+                    <div class="form-group">
+                        <label for="customerName" class="fw-bold">Customer Name:</label>
+                        <input type="text" class="form-control" id="customerName" placeholder="Enter Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="customerNumber" class="fw-bold">Number:</label>
+                        <input type="text" class="form-control" id="customerNumber" placeholder="Enter Your Number" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="customerEmail" class="fw-bold">Email:</label>
+                        <input type="email" class="form-control" id="customerEmail" placeholder="Enter Your Email" required>
+                    </div>
+                    <button type="button" class="btn btn-primary" onclick="BookingOrder()">Confirm Booking</button>
+                    @*  <button type="button" class="btn btn-danger" onclick="generateBill()">Print receipt</button> *@
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+<form class="header" asp-controller="Add" asp-action="CustomerBill" method="post">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                @foreach (var ground in Model)
+                {
+                    <div>
+                        <img src="data:image/png;base64,@Convert.ToBase64String(ground.Image)" alt="Product Image" style="height: 440px; width: 500px; margin-top:8px; margin-right:30px;">
+                    </div>
+                    <div>
+                        <h3 class="mt-2" id="GName" style="margin-left:160px;">@ground.GroundName</h3>
+                        <h5 style="margin-left:150px;">@ground.Description</h5>
+
+                    </div>
+                }
+
+
+            </div>
+            <div class="col-lg-6">
+                <div class="form-group deatils mt-3">
+
+                    <h5>Ground Location :</h5>
+                    @foreach (var ground in Model)
+                    {
+                        <div id="location">@ground.Location</div>
+                        <hr />
+
+                        <h5>Price :</h5>
+                        @* @foreach (var ground in Model)
+                    { *@
+                        <div>3 hour Time Slot Price : ₹  <span id="totalprice">@ground.Price</span></div>
+                        <div class="Actual Price">Full day Price : ₹  @ground.Price + ₹
+                            <span class="addprice">3000 </span>
+                            <span class="sum"></span>
+                            </div>
+                       
+
+                    }<hr />
+                </div>
+                <form>
+                    <div class="form-group farm mt-2">
+                        <label for="date" class="fw-bold">Select Date:</label>
+                        <input type="date" id="date" name="date" class="form-control" required>
+                    </div>
+
+                    @*  <div class="form-group farm">
+                    <label for="time" class="fw-bold">Select Time Slot:</label>
+                    <select id="time" name="time" class="form-control" required>
+                    <option value="" disabled selected>------ Select a time slot ------</option>
+                    <option value="9AMto12PM">9 AM to 12 PM</option>
+                    <option value="1PMto4PM">1 PM to 4 PM</option>
+                    <option value="6PMto9PM">6 PM to 9 PM</option>
+                    </select>
+                    </div> *@
+
+                    <div class="form-group farm">
+                        <label for="time" class="fw-bold">Select Time Slot:</label>
+                        <select id="time" name="time" class="form-control" required>
+                            <option value="" disabled selected>------ Select a time slot ------</option>
+                            <option value="Full Day">  Full Day</option>
+                            <option value="9AMto12PM">9 AM to 12 PM</option>
+                            <option value="1PMto4PM">1 PM to 4 PM</option>
+                            <option value="6PMto9PM">6 PM to 9 PM</option>
+                        </select>
+                    </div>
+                    <div>
+
+                        <a onclick="checkAvailability()" class=" buttun btn btn-info">Check Availability</a>
+                        @*  <a id="myButton" class=" buttun btn btn-success">check availability</a> *@
+                    </div>
+                </form>
+                <ol class="form mt-4">
+                    <li> Choose a date above to see available times to Select Your Favorite Slot. </li>
+                    <li>We don't provide football and cricket kit or any other Sports kit.</li>
+                </ol>
+            </div>
+        </div><hr />
+        <div class="description">
+            <div class="mx-3">
+                <h4>Description - </h4>
+                <div class="row ml-5">
+                    <h5 class="mt-3 ml-4">
+                        We provide the highest quality of sporting turf coupled with high standard amenities & surroundings. Play Sports?
+                    </h5>
+                    <div class="col-6 mt-5">
+                        <p class=" ml-5 fw-bold">Important Point to Note :</p>
+                        <ul class="mt-4">
+                            <li style="color:red">booking receipt and money deposite is mandatory before starting the game</li>
+                            <li>Spectators or visitors will not be allowed.</li>
+                            <li>No more than 25 people at a time, will be allowed on the turf.</li>
+                            <li>If player do not arrive even 30 minutes of scheduled time,booking will be postponed and no amount will be refunded. </li>
+                            <li> The ground must be left vacant within 20 minutes after the game.</li>
+                        </ul>
+                    </div>
+                    <div class="col-6 mt-5">
+                        <p class="fw-bold ml-5">Terms & Conditions for Booking :</p>
+                        <ul class="mt-4">
+                            <li style="color:blue">The ground price for Full Day slot includes an additional charge of 3000.</li>
+                            <li>PlaySpots advises all members to play a fair game.</li>
+                            <li>Outside food, celebrations, and parties of any kind are strictly prohibited.</li>
+                            <li> Music, speakers, whistle, foul & abusive language, and any kind of loud noise is strictly prohibited. </li>
+                            <li>Any booking violating terms and conditions will be cancelled and entry inside the ground will be restricted. </li>
+                            <li>Players are strictly required to adhere to their respective slot timings as per booking details. Any  extra usage of field may attract additional fees.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <label class="ml-5 mt-3">
+                <input type="checkbox" id="acceptTerms" required>
+                I have read and accept the terms and conditions
+            </label>
+            <div>
+                <a id="Button" class="center  btn btn-info mt-4" onclick="BookNow()">BOOK NOW</a>
+            </div>
+
+        </div>
+    </div>
+</form>
+
+<script>
+    function checkAvailability() {
+
+        var data = {
+            date: $('#date').val(),
+            time: $('#time').val(),
+            groundName: $('#GName').text()
+        }
+        $.ajax({
+            type: 'POST',
+            url: '/Add/CheckAvailability',
+            data: data,
+            success: function (response) {
+                if (response.isAvailable) {
+                    alert('This ground is available on the selected date and time slot.');
+                } else {
+                    alert('Sorry, this ground is already booked on the selected date and time slot.');
+                }
+            },
+            error: function () {
+                alert('An error occurred while checking availability.');
+            }
+        });
+    }
+
+    function BookNow() {
+        if ($('#acceptTerms').is(':checked')) {
+            alert('I hope you are also checked a date and particular time slots availability');
+            showBookingModal();
+        } else {
+            alert('Please read and accept the terms and conditions before booking.');
+        }
+    }
+
+    function showBookingModal() {
+        var data = {
+            date: $('#date').val(),
+            time: $('#time').val(),
+            groundName: $('#GName').text()
+        };
+
+        $.ajax({
+            type: 'POST',
+            url: '/Add/CheckAvailability',
+            data: data,
+            success: function (response) {
+                if (response.isAvailable) {
+                    var groundName = $('#GName').text();
+                    var basePrice = parseInt($('#totalprice').text());
+                    var location = $('#location').text();
+
+                    var selectedDate = $('#date').val();
+                    var selectedTime = $('#time').val();
+
+
+                    var totalPrice = (selectedTime === "Full Day") ? basePrice + 3000 : basePrice;
+
+                    $('#selectedGroundInfo').html(`
+                            <h5>Ground Name : ${groundName}</h5>
+                            <p class="fw-bold">Location : ${location}</p>
+                            <p class="fw-bold">Price : </p>
+                            <p class="fw-bold" id="price">${totalPrice}</p>
+                            <p>Date: ${selectedDate}</p>
+                            <p>Time: ${selectedTime}</p>
+                        `);
+
+                    $('#bookingModal').modal('show');
+                } else {
+                    alert('Sorry, this ground is already booked on the selected date and time slot.');
+                }
+            },
+            error: function () {
+                alert('An error occurred while checking availability.');
+            }
+        });
+    }
+
+
+    function BookingOrder() {
+        if ($('#acceptTerms').is(':checked')) {
+            var bookingData = {
+                groundName: $('#GName').text(),
+                price: $('#price').text(),
+                
+                location: $('#location').text(),
+
+                customerName: $('#customerName').val(),
+                customerNumber: $('#customerNumber').val(),
+                customerEmail: $('#customerEmail').val(),
+
+                date: $('#date').val(),
+                time: $('#time').val()
+            };
+           
+
+            $.ajax({
+                type: 'POST',
+                url: '/Add/ConfirmBooking',
+                data: bookingData,
+                success: function (response) {
+                    if (response) {
+                        alert("Ground Booked Successfully");
+                        generateBill();
+                        // window.print();
+                        // location.reload();
+                    }
+                },
+                error: function (error) {
+                    alert("An error occurred while booking.");
+                }
+            });
+        } else {
+            alert('Please read and accept the terms and conditions before booking.');
+        }
+    }
+
+    function generateBill() {
+        var customerName = $('#customerName').val();
+        var customerNumber = $('#customerNumber').val();
+        var customerEmail = $('#customerEmail').val();
+        var groundName = $('#GName').text();
+        var totalprice = $('#totalprice').text();
+        var location = $('#location').text();
+        var selectedDate = $('#date').val();
+        var selectedTime = $('#time').val();
+
+
+        if (selectedTime === "Full Day") {
+
+            var additionalCharge = 3000;
+            var updatedTotalPrice = parseInt(totalprice) + additionalCharge;
+            totalprice = updatedTotalPrice.toString();
+        }
+
+        var billData = {
+            customerName: customerName,
+            customerNumber: customerNumber,
+            customerEmail: customerEmail,
+            groundName: groundName,
+            price: totalprice,
+            location: location,
+            Date: selectedDate,
+            Time: selectedTime
+        };
+
+        localStorage.setItem('billData', JSON.stringify(billData));
+        window.location.href = '/Add/BookingDetail';
+    }
+
+    // full day price
+    var actualPriceElement = document.querySelector('.Actual.Price');
+    var addPriceElement = document.querySelector('.addprice');
+    var sumElement = document.querySelector('.sum');
+
+    var actualPrice = parseFloat(actualPriceElement.textContent.match(/\d+/)[0]);
+    var addPrice = parseFloat(addPriceElement.textContent);
+
+    var totalPrice = actualPrice + addPrice;
+
+    
+    sumElement.textContent = '=  ₹ ' + totalPrice;
+</script>
+
+

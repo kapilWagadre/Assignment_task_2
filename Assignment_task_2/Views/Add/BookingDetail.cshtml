@@ -1,0 +1,140 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Booking Details</title>
+   
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" integrity="sha384-4LISF5TTJX/fLmGSxO53rV4miRxdg84mZsxmO8Rx5jGtp/LbrixFETvWa5a6sESd" crossorigin="anonymous">
+
+    <style>
+        .heading {
+             
+            text-align:center;
+            background-color:darkturquoise;
+            
+        }
+
+        .center{
+            text-align:center;
+        }
+
+        .border {
+            margin-top: 70px;
+            width:900px;
+            margin-left:190px;
+            background-color:lightblue;
+        }
+
+        .btn{
+            margin-left:390px;
+            margin-bottom:20px;
+        }
+    </style>
+</head>
+<body>
+    <div class=" border rounded-3">
+    <h2 class="heading">Booking Details</h2>
+    
+    <div class=" row mt-3">
+       
+        <div class="center col-6 ">
+            <div>
+                <h5>Ground Name:</h5>
+                    <p class="text-uppercase" id="groundName"></p>
+            </div>
+            <div>
+                <h5>Location:</h5>
+                    <p class="text-uppercase" id="location"></p>
+            </div>
+            <div>
+                <h5>Price:</h5>
+                <p  id="price"></p>
+            </div>
+            <div>
+                <h5>Date:</h5>
+                <p id="date"></p>
+            </div>
+        </div>
+            <div class="center col-3 ml-5">
+            <div>
+                <h5>Customer Name:</h5>
+                    <p class="text-uppercase" id="customerName"></p>
+            </div>
+            <div>
+                <h5>Customer Number:</h5>
+                    <p  id="customerNumber"></p>
+            </div>
+            <div>
+                <h5>Customer Email:</h5>
+                <p id="customerEmail"></p>
+            </div>
+            <div>
+                <h5>Time:</h5>
+                <p id="time"></p>
+            </div>
+        </div>
+            <div class="description mt-3">
+                <div class="mx-3">
+                    <h5 class="ml-4">Description - </h5>
+                    <div class="row ml-2">
+                        <h6 class="mt-3 ml-4">
+                            We provide the highest quality of sporting turf coupled with high standard amenities & surroundings. Play Sports?
+                        </h6>
+                        <div class="col-6 mt-5">
+                            <p class=" ml-5 fw-bold">Important Point to Note :</p>
+                            <ul class="mt-4">
+                                <li style="color:red">booking receipt and money deposite is mandatory before starting the game</li>
+                                <li>Spectators or visitors will not be allowed.</li>
+                                <li>No more than 20 people at a time, will be allowed on the turf.</li>
+                                <li>If player do not arrive even 30 minutes of scheduled time,booking will be postponed and no amount will be refunded. </li>
+                                <li> The ground must be left vacant within 20 minutes after the game.</li>
+                            </ul>
+                        </div>
+                        <div class="col-6 mt-5">
+                            <p class="fw-bold ml-2">Terms & Conditions for Booking :</p>
+                            <ul class="mt-4">
+                                <li style="color:blue">The ground price for Full Day slot includes an additional charge of 3000.</li>
+                                <li>PlaySpots advises all members to play a fair game.</li>
+                                <li>Outside food, celebrations, and parties of any kind are strictly prohibited.</li>
+                                <li> Music, speakers, whistle, foul & abusive language, and any kind of loud noise is strictly prohibited. </li>
+                                <li>Any booking violating terms and conditions will be cancelled and entry inside the ground will be restricted. </li>
+                                <li>Players are strictly required to adhere to their respective slot timings as per booking details. Any delay or extra usage of field may attract additional fees.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            <button class="btn btn-primary" onclick="printPage()">Print Details</button>
+        </div>
+    </div>
+    </div>
+
+    <script>
+        var data = JSON.parse(localStorage.getItem('billData'));
+
+    
+        if (data) {
+            $('#groundName').text(data.groundName);
+            $('#location').text(data.location);
+            $('#price').text(data.price);
+            $('#date').text(data.Date);
+            $('#time').text(data.Time);
+            $('#customerName').text(data.customerName);
+            $('#customerNumber').text(data.customerNumber);
+            $('#customerEmail').text(data.customerEmail);
+        }
+
+       
+        localStorage.removeItem('billData');
+
+        function printPage() {
+            window.print();
+            window.location.href = '/Add/HomePage';
+            // location.reload();
+
+        }
+    </script>
+</body>
+</html>
+ 

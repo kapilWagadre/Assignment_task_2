@@ -1,0 +1,176 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://kendo.cdn.telerik.com/themes/6.7.0/default/default-main.css" rel="stylesheet" />
+    <script src="js/jquery.min.js"></script>
+    <link href="https://kendo.cdn.telerik.com/themes/6.7.0/default/default-main.css" rel="stylesheet" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/kendo.all.min.js"></script>
+    <link href="https://kendo.cdn.telerik.com/themes/6.7.0/default/default-main.css" rel="stylesheet" />
+    <script src="js/kendo.all.min.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2023.2.829/js/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.3.min.js"></script>
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/themes/6.7.0/default/default-main.css" />
+    <script src="https://kendo.cdn.telerik.com/2023.2.829/js/kendo.all.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2023.2.829/mjs/kendo.all.js" type="module"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" integrity="sha384-4LISF5TTJX/fLmGSxO53rV4miRxdg84mZsxmO8Rx5jGtp/LbrixFETvWa5a6sESd" crossorigin="anonymous">
+    
+    <title>Play Site</title>
+    <style>
+        body {
+            
+            background-origin: border-box;
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            backdrop-filter: blur(16px) saturate(180%);
+            -webkit-backdrop-filter: blur(16px) saturate(180%);
+            display: flex;
+        }
+        .header {
+            margin-top: 92px;
+            width: 1100px;
+            height: 580px;
+            margin-left:80px;
+        }
+        .image{
+            margin-top:62px;
+            width:1100px;
+            height:480px;
+            
+        }
+        .top{
+            margin-top:20px;
+            margin-left:10px;
+            margin-bottom: 20px;
+        }
+
+        .tops {
+            margin-top:30px;
+        }
+
+        .container{
+            margin-left:10px;
+        }
+        .heading{
+            background-color:lightskyblue;
+            height:60px;
+            text-align:center;
+
+
+        }
+        .detail {
+            text-align:center;
+            background-color:lightblue;
+        }
+        .buttun{
+           
+            margin-bottom:20px;
+        }
+
+        
+        .social-links svg {
+            width: 20px;
+            height: 20px;
+            color: var(--light-gray-color);
+        }
+
+            .social-links svg:hover {
+                color: var(--primary-color);
+            }
+
+        .social-links li {
+            padding-right: 30px;
+        }
+
+        .head{
+            width:1265px;
+            background-color:forestgreen;
+        }
+    </style>
+</head>
+ <body>
+  
+
+    <div class="head py-5">
+        <div class="container px-4 px-lg-5 my-5">
+            <div class="text-center text-white">
+                <h1 class="display-4 fw-bolder">Best Truf Ground's in Bhopal</h1>
+                <p class="lead fw-normal text-white-50 mb-0">Let's Play Bhopal</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="listView"></div>
+
+    <script type="text/x-kendo-tmpl" id="template">
+        <div class="container">
+
+            <div class="tops" style="border:1px solid;">
+                 <dd class="top">
+                        <img src="data:image/*;base64,#:image#" height="260" width="330" />
+                    </dd>
+                 <div class="detail"><br>
+                      <h2 ><b>#:groundName#</b></h3>
+                      <h5>#:location#</h5><br>
+                    <a id="myButton" class="buttun btn btn-info"  href="/Add/MoreDetail/#:id#" >More Detail</a>
+                </div>
+        </div>
+        </div>
+        <hr>
+    </script>
+
+
+
+    <script>
+
+
+        $(document).ready(function () {
+
+            $("#listView").kendoListView({
+                template: kendo.template($("#template").html()),
+                dataSource: {
+
+                    transport: {
+                        read: {
+                            url: "/Add/Showtruf/",
+                            dataType: "json"
+                        }
+
+                    },
+
+                    schema: {
+                        model: {
+                            id: "id",
+                            fields: {
+                                id: { type: "number" },
+                                GroundName: { type: "string" },
+                                Price: { type: "string" },
+                                Description: { type: "string" },
+                                Location: { type: "string" },
+                                Image: { type: "string" }
+                            }
+                        }
+                    }
+                },
+                layout: "grid",
+                grid: {
+                    cols: 6,
+                    rows: 2
+                },
+            });
+
+        });
+
+
+    </script>
+</body>
+</html> 
