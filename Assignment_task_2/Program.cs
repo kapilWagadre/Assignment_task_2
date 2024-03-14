@@ -1,12 +1,14 @@
 using Assignment_task_2.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<DataBaseConnect>(options =>
+
+builder.Services.AddDbContext<DataBaseConnect>(options => 
 options.UseNpgsql(builder.Configuration.GetConnectionString("DBFirstConnectionString")));
 
 

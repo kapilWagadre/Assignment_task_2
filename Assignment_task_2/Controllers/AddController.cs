@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Assignment_task_2.Controllers
 {
-    [Authorize]
+   [Authorize]
     public class AddController : Controller
     {
         private readonly DataBaseConnect _context;
@@ -21,12 +21,7 @@ namespace Assignment_task_2.Controllers
             return View();
         }
 
-        public IActionResult AddCustomer(Customer data)
-        {
-            _context.Customers.Add(data);
-            _context.SaveChanges();
-            return RedirectToAction("Index");
-        }
+       
 
 
         //public IActionResult SignIn(string email, string password)
@@ -47,8 +42,6 @@ namespace Assignment_task_2.Controllers
 
         //}
 
-       
-        
         public IActionResult HomeIndex()
         {
             return View();

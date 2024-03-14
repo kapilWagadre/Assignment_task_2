@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace Assignment_task_2.Models
 {
-    public class DataBaseConnect : DbContext
+    public class DataBaseConnect : IdentityDbContext
     {
         public DataBaseConnect(DbContextOptions<DataBaseConnect> options) : base(options)
         {

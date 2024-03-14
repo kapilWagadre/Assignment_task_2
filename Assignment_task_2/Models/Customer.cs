@@ -1,9 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace Assignment_task_2.Models
 {
     public class Customer
     {
+       
         [Key]
         public int id { get; set; }
         public string name { get; set; }
@@ -14,4 +16,5 @@ namespace Assignment_task_2.Models
         public string cfmpassword { get; set; }
 
     }
+  
 }
