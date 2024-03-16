@@ -27,9 +27,11 @@
             background-color:lightblue;
         }
 
+        .btn-primary {
+           margin-left:320px;
+        }
         .btn{
-            margin-left:390px;
-            margin-bottom:20px;
+            margin-bottom: 10px;
         }
     </style>
 </head>
@@ -105,7 +107,9 @@
                         </div>
                     </div>
                 </div>
-            <button class="btn btn-primary" onclick="printPage()">Print Details</button>
+                <button class="btn btn-primary" onclick="sendMessage()">Send Message</button>
+                <button class="btn btn-info" onclick="printPage()">Print Details</button>
+         
         </div>
     </div>
     </div>
@@ -132,7 +136,28 @@
             window.print();
             window.location.href = '/Add/HomePage';
             // location.reload();
+        }
+        
+        function sendMessage() {
+            var email = $('#customerEmail').text();
+            var name = $('#customerName').text();
+            var date = $('#date').text();
+            var time = $('#time').text();
+            var groundName = $('#groundName').text();
 
+            $.post('/Admin/SendConfirmationEmail', {
+                emailAddress: email,
+                customerName: name,
+                bookingDate: date,
+                bookingTime: time,
+                groundName: groundName
+            })
+                .done(function () {
+                    alert('Booking confirmation email sent successfully.');
+                })
+                .fail(function () {
+                    alert('Failed to send booking confirmation email.');
+                });
         }
     </script>
 </body>

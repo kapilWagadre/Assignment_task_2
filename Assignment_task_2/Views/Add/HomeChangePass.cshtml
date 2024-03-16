@@ -7,13 +7,13 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" integrity="sha384-4LISF5TTJX/fLmGSxO53rV4miRxdg84mZsxmO8Rx5jGtp/LbrixFETvWa5a6sESd" crossorigin="anonymous">
 <style>
-    .row{
-        margin-left:40px;
+    .row {
+        margin-left: 40px;
     }
 
-    .heading{
-        margin-top:60px;
-        margin-left:20px;
+    .heading {
+        margin-top: 60px;
+        margin-left: 20px;
     }
 </style>
 
@@ -21,27 +21,30 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="ChangePassword">
+        <form asp-controller="Home" asp-action="ChangePassword">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <!-- Display the email value -->
             <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email"  class="form-control" />
+                <label asp-for="Email" class="control-label">Email:</label>
+                <input type="text" class="form-control" value="@Model.Email" readonly />
+                <input type="hidden" asp-for="Email" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <label asp-for="CurrentPassword" class="control-label"></label>
+                <label asp-for="CurrentPassword" class="control-label">Current Password:</label>
                 <input asp-for="CurrentPassword" type="password" class="form-control" />
                 <span asp-validation-for="CurrentPassword" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="NewPassword" class="control-label"></label>
+                <label asp-for="NewPassword" class="control-label">New Password:</label>
                 <input asp-for="NewPassword" type="password" class="form-control" />
                 <span asp-validation-for="NewPassword" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ConfirmPassword" class="control-label"></label>
-                <input asp-for="ConfirmPassword" type="password"  class="form-control" />
+                <label asp-for="ConfirmPassword" class="control-label">Confirm New Password:</label>
+                <input asp-for="ConfirmPassword" type="password" class="form-control" />
                 <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -51,7 +54,8 @@
     </div>
 </div>
 
+
 <div>
-    <a class="ml-5"  asp-action="Index1">Back to Login </a>
+    <a class="ml-5" asp-action="Index1">Back to Login </a>
 </div>
 

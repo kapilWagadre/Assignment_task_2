@@ -1,5 +1,7 @@
 ﻿using Assignment_task_2.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Net.Mail;
+using System.Net;
 
 namespace Assignment_task_2.Controllers
 {
@@ -110,6 +112,39 @@ namespace Assignment_task_2.Controllers
         {
             var book = _context.Bookingkmodel.ToList();
             return new JsonResult(book);
+        }
+
+        [HttpPost]
+        public IActionResult SendConfirmationEmail(string emailAddress, string customerName, string bookingDate, string bookingTime, string groundName)
+        {
+            try
+            {
+                // Create and configure the SMTP client
+                using (var client = new SmtpClient("smtp.gmail.com"))
+                {
+                    client.UseDefaultCredentials = false;
+                    client.Credentials = new NetworkCredential("kapilwagadre1111@gmail.com", "epls lyay lyfc pted");
+                    client.Port = 587;
+                    client.EnableSsl = true;
+
+                    // Create the email message
+                    var message = new MailMessage();
+                    message.From = new MailAddress("kapilwagadre1111@gmail.com");
+                    message.To.Add(emailAddress);
+                    message.Subject = "Booking Confirmation";
+                    message.Body = $"Dear {customerName},\n\nThank you for booking. Your booking details are as follows:\n\nDate: {bookingDate}\nTime: {bookingTime}\nGround Name: {groundName}\n\nWe look forward to seeing you!\n\nBest regards,\nThe Ground Booking Team";
+
+
+                    client.Send(message);
+                }
+
+                return Ok(); 
+            }
+            catch (Exception ex)
+            {
+                // Handle exceptions
+                return StatusCode(500, "An error occurred while sending the email.");
+            }
         }
     }
 }

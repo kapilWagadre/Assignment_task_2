@@ -11,6 +11,7 @@ using Microsoft.AspNet.Identity;
 using System.Net.Mail;
 using System.Net;
 using Microsoft.AspNetCore.Authorization;
+using Newtonsoft.Json;
 
 namespace Assignment_task_2.Controllers
 {
@@ -34,6 +35,15 @@ namespace Assignment_task_2.Controllers
         {
             if (ModelState.IsValid)
             {
+                
+                var existingCustomer = _context.Customers.FirstOrDefault(c => c.email == data.email);
+                if (existingCustomer != null)
+                {
+                    TempData["ErrorMessage"] = "This email is already registered.";
+                    return View(data); 
+                }
+
+                
                 _context.Customers.Add(data);
                 _context.SaveChanges();
                 return RedirectToAction("Index1");
@@ -43,7 +53,6 @@ namespace Assignment_task_2.Controllers
 
         public IActionResult Index1()
         {
-
             ClaimsPrincipal claimsUser = HttpContext.User;
             if (claimsUser.Identity.IsAuthenticated)
                 return RedirectToAction("HomeIndex", "Add");
@@ -89,9 +98,20 @@ namespace Assignment_task_2.Controllers
 
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
                     new ClaimsPrincipal(identity), properties);
+                var userViewModel = new Customer
+                {
+                    email = user.email,
+                    name = user.name,
+                    password = user.password,
+
+                };
+
+                // Use TempData or Session to pass complex objects if necessary
+                TempData["UserDetails"] = JsonConvert.SerializeObject(userViewModel);
 
                 return RedirectToAction("HomeIndex", "Add");
             }
+        
             else
             {
                 TempData["ErrorMessage"] = "User not found !!";
@@ -126,8 +146,16 @@ namespace Assignment_task_2.Controllers
                 smtpClient.Credentials = new NetworkCredential("kapilwagadre1111@gmail.com", "epls lyay lyfc pted");
 
                 smtpClient.EnableSsl = true;
+                try
+                {
+                    smtpClient.Send(mailMessage);
+                    return RedirectToAction("Index1");
+                }
+                catch (Exception ex)
+                {
+                    return RedirectToAction("ForgetpassError");
+                }
 
-              
             }
             return RedirectToAction("ForgetPassword");
         }
@@ -186,7 +214,7 @@ namespace Assignment_task_2.Controllers
 
                         _context.SaveChanges(); 
                         TempData["SuccessMessage"] = "Password changed successfully.";
-                        return RedirectToAction("Index1", "Home");
+                        return RedirectToAction("Index1");
                     }
                     else
                     {

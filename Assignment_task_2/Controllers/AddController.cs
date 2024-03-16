@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
+using Newtonsoft.Json;
 
 namespace Assignment_task_2.Controllers
 {
@@ -16,12 +18,18 @@ namespace Assignment_task_2.Controllers
         {
             _context = context;
         }
-        public IActionResult Index()
+        public IActionResult HomeIndex()
         {
+            if (TempData["UserDetails"] is string userDetailsJson)
+            {
+                var userDetails = JsonConvert.DeserializeObject<Customer>(userDetailsJson);
+                return View(userDetails); 
+            }
+
             return View();
         }
 
-       
+
 
 
         //public IActionResult SignIn(string email, string password)
@@ -42,15 +50,35 @@ namespace Assignment_task_2.Controllers
 
         //}
 
-        public IActionResult HomeIndex()
-        {
-            return View();
-        }
+        //public IActionResult HomeIndex()
+        //{
+        //    return View();
+        //}
 
         public IActionResult HomePage()
         {
             return View();
         }
+
+        public IActionResult HomeChangePass(string email)
+        {
+            var user = _context.Customers.FirstOrDefault(u => u.email == email);
+
+            if (user != null)
+            {
+                var model = new Changepass
+                {
+                    Email = user.email
+                };
+
+                return View(model);
+            }
+            else
+            {
+                return NotFound(); 
+            }
+        }
+
         public IActionResult Showtruf()
         {
             var pro = _context.Grounds.ToList();

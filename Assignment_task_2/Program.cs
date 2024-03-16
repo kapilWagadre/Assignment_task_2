@@ -17,7 +17,7 @@ builder.Services.AddAuthentication(
     .AddCookie(options =>
     {
         options.LoginPath = "/Home/Index1";
-        options.ExpireTimeSpan = TimeSpan.FromMinutes(1);
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(50);
     });
 
 

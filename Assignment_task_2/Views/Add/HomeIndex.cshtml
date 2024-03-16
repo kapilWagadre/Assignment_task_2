@@ -1,4 +1,4 @@
-﻿
+﻿@model Assignment_task_2.Models.Customer
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,81 +11,90 @@
     <style>
         body {
             /* background-image: url('https://t3.ftcdn.net/jpg/01/31/22/84/240_F_131228401_Sx9CgNcjxxYEsLCN81KGN4LIu6zFPD0h.jpg'); */
-             background-size: cover; 
-            background-repeat: no-repeat; 
-          
+            background-size: cover;
+            background-repeat: no-repeat;
         }
 
-        .logo{
-            margin-top:66px;
+        .logo {
+            margin-top: 66px;
         }
-        .top{
-            margin-top:260px;
+
+        .top {
+            margin-top: 260px;
         }
-        .detail{
-            color:white;
-            margin-left:90px;
-            font-size:40px;
+
+        .detail {
+            color: white;
+            margin-left: 90px;
+            font-size: 40px;
         }
 
         .details {
-            color:lightgreen;
+            color: lightgreen;
             font-size: 30px;
-            margin-left:90px;
+            margin-left: 90px;
         }
 
         .image {
-           margin-top:250px;
-           margin-left:300px;
+            margin-top: 250px;
+            margin-left: 300px;
         }
 
-        .btn{
-            margin-top:34px;
-            margin-left:140px;
-            width:150px;
-            height:40px;
-            background-color:lightskyblue;
-            color:black;
+        .btn {
+            margin-top: 34px;
+            margin-left: 140px;
+            width: 150px;
+            height: 40px;
+            background-color: lightskyblue;
+            color: black;
         }
-        .main{
-            height:600px;
-            width:100%;
-            display:flex;
-            position:relative;
+
+        .main {
+            height: 600px;
+            width: 100%;
+            display: flex;
+            position: relative;
         }
-        .box{
-            position:absolute;
+
+        .box {
+            position: absolute;
         }
-        .main img{
-            height:100%;
+
+        .main img {
+            height: 100%;
             width: 100%;
         }
 
         .footer {
             color: white;
             background-color: darkslategrey;
-            margin-top:60px;
-            height:250px;
+            margin-top: 60px;
+            height: 250px;
         }
 
-        .view{
-         
-           width: 400px;
-           height:200px;
-           text-align:center;
-           margin-left:140px;
+        .view {
+            width: 400px;
+            height: 200px;
+            text-align: center;
+            margin-left: 140px;
         }
 
-        .container{
-            height:300px;
+        .container {
+            height: 300px;
         }
-       
 
-       
+        .dropdown-toggle {
+            margin-right:30px;
+        }
+
+        .lefthead
+        {
+            margin-right: 30px;
+        }
     </style>
-    
-   
-   
+
+
+
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
@@ -96,24 +105,39 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <div class="navbar-nav ml-auto">
+                
+                <div class="nav-item active dropdown">
+                    <a class="nav-link dropdown-toggle bi bi-person-gear" href="#" id="navbarAccountDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Account
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarAccountDropdown">
+                        <!-- Display user's email and name -->
+                        @if (Model != null)
+                        {
+                            <li> <a class="dropdown-item bi bi-person-fill-check" href="#">  Username : @Model.name</a></li>
+                            <li>
+                                <a class="dropdown-item bi bi-envelope-check-fill" href="#">  Email : @Model.email</a>
+                            </li>
+
+                            <li><a class="dropdown-item bi bi-lock" href="/Add/HomeChangePass?email=@Model.email">Change Password</a></li>
+                        }
+                    </ul>
+                </div>
+
                 <div class="nav-item lefthead active">
                     <a class="nav-link bi bi-house h-5 w-5 " href="/Add/HomeIndex"> Home</a>
                 </div>
+                <div class="nav-item active">
+                    <a id="logoutLink" class="nav-link  bi bi-lock h-5 w-5" href="/Home/Logout"> Logout</a>
+                </div>
 
-                <div class="nav-item active">
-                    <a class="nav-link  bi bi-lock h-5 w-5" href="/Home/Logout"> Logout</a>
-                </div>
-                <div class="nav-item active">
-                    <a class="nav-link bi bi-person-gear" href="/Admin/Adminlogin"> Admin </a>
-                </div>
             </div>
         </div>
     </nav>
- 
 
     <div class="main">
         <img src="https://t3.ftcdn.net/jpg/01/31/22/84/240_F_131228401_Sx9CgNcjxxYEsLCN81KGN4LIu6zFPD0h.jpg"></img>
-        
+
         <div class="box row">
             <div class="col-6">
                 <h4 class="detail top">YOUR</h4>
@@ -126,12 +150,12 @@
 
             </div>
             <div class="col-6">
-                  <img src=" https://www.playspots.in/wp-content/uploads/2020/02/meet-pals.png" class="image" style="width:250px; height:280px;"> 
-              
-                 
-            </div>
+                <img src=" https://www.playspots.in/wp-content/uploads/2020/02/meet-pals.png" class="image" style="width:250px; height:280px;">
+
+
             </div>
         </div>
+    </div>
 
     <div class="container row mt-3">
         <div class="col-md-6 mt-5">
@@ -161,7 +185,7 @@
                 <img src="https://km-landing.s3.ap-south-1.amazonaws.com/Images/km-homePageNew/non-textCr.png" class="card-img-top" alt="Image 1">
                 <div class="card-body ml-4">
                     <h5 class="card-title ml-5">Cricket</h5>
-                   
+
                 </div>
             </div>
         </div>
@@ -176,12 +200,12 @@
         </div>
 
         <div class="col-md-3">
-          
-                <img src="~/css/img/Hocman1.jpg" style="height:290px; class="card-img-top" alt="Image 3">
-                <div class="card-body  ml-4">
-                    <h5 class="card-title  ml-5">Hockey</h5>
-                </div>
-           
+
+            <img src="~/css/img/Hocman1.jpg" style="height:290px; class="card-img-top" alt="Image 3">
+            <div class="card-body  ml-4">
+                <h5 class="card-title  ml-5">Hockey</h5>
+            </div>
+
         </div>
 
         <div class="col-md-3">
@@ -193,8 +217,8 @@
             </div>
         </div>
     </div>
-    
-     <footer id="footer" class="overflow-hidden footer">
+
+    <footer id="footer" class="overflow-hidden footer">
         <div class="container">
             <div class="row">
                 <div class="footer-top-area">
@@ -227,7 +251,20 @@
             </div>
         </div>
         <hr>
-    </footer> 
+    </footer>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.getElementById('logoutLink').addEventListener('click', function (e) {
+                e.preventDefault();
+                const logoutConfirmed = confirm('Are you sure you want to log out?');
+                if (logoutConfirmed) {
+
+                    window.location.href = this.href;
+                }
+
+            });
+        });
+    </script>
 </body>
 </html>

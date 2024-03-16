@@ -55,6 +55,23 @@
             }
     </style>
 </head>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+
+    <img src="https://www.playspots.in//wp-content/uploads/2018/10/WHITE.png" width="100px" class="img" style="margin-left:7px" />
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <div class="navbar-nav ml-auto">
+            <div class="nav-item active">
+                <a class="nav-link  bi bi-lock h-5 w-5" href="/Home/Index1"> Login</a>
+            </div>
+            <div class="nav-item active">
+                <a class="nav-link bi bi-person-gear" href="/Admin/Adminlogin"> Admin </a>
+            </div>
+        </div>
+    </div>
+</nav>
 <body style="background-image: url('https://images.pexels.com/photos/61143/pexels-photo-61143.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');">
    
     <form class="top" asp-action="Index" method="post">
@@ -102,6 +119,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script>
+        var errorMessage = "@TempData["ErrorMessage"]";
+        if (errorMessage && errorMessage.length > 0) {
+            alert(errorMessage);
+        }
+
         $(document).ready(function () {
             $('[name]').css('border', '1px solid blue');
         });
