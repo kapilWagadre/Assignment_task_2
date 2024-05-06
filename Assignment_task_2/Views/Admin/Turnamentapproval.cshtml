@@ -1,0 +1,182 @@
+﻿@model List<TurnamentBooking>;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <link href="https://kendo.cdn.telerik.com/themes/6.7.0/default/default-main.css" rel="stylesheet" />
+    <script src="js/jquery.min.js"></script>
+    <script src="js/kendo.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ag-grid-community/dist/ag-grid-community.min.js"></script>
+    <script src="https://kendo.cdn.telerik.com/2023.2.829/js/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.3.min.js"></script>
+    <link rel="stylesheet" href="https://kendo.cdn.telerik.com/themes/6.7.0/default/default-main.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" integrity="sha384-4LISF5TTJX/fLmGSxO53rV4miRxdg84mZsxmO8Rx5jGtp/LbrixFETvWa5a6sESd" crossorigin="anonymous">
+
+    <title>Play Site</title>
+    <style>
+        .heading {
+            text-align: center;
+            margin-top: 90px;
+            margin-bottom: 40px;
+            background-color: darkturquoise;
+        }
+
+        .ag-theme-quartz,
+        .ag-theme-quartz-dark {
+            --ag-foreground-color: black;
+            --ag-header-foreground-color: white;
+            --ag-header-background-color: #F08080;
+            --ag-font-size: 16px;
+        }
+
+        .ag-theme-alpine .ag-cell-value {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .ag-theme-quartz .ag-cell img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .ag-theme-alpine .ag-cell-value span {
+            width: 100%;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+
+        <img src="https://www.playspots.in//wp-content/uploads/2018/10/WHITE.png" width="100px" class="img" style="margin-left:7px" />
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <div class="navbar-nav ml-auto">
+                <div class="nav-item active">
+                    <a class="nav-link  bi bi-lock h-5 w-5" href="/Home/Index1">User Login</a>
+                </div>
+                <div class="nav-item active">
+                    <a class="nav-link  bi bi-plus-circle h-5 w-5" href="/Admin/AddGround"> Add Ground</a>
+                </div>
+                <div class="nav-item active">
+                    <a class="nav-link  bi bi-people h-5 w-5" href="/Admin/BookingTable"> Booking List</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <h3 class="heading"> Ground Booking List</h3>
+
+    <div id="myGrid" class="ag-theme-quartz" style="height: 500px; width:100%;"></div>
+
+    <script>
+        
+        const gridOptions = {
+            defaultColDef: {
+                rowHeight: 550,
+            },
+            columnDefs: [ 
+
+                /* { field: "id", type: ['nonEditableColumn'], width: 80 }, */
+                { field: "customerName", headerName: "Name", width: 100 },
+                { field: "number", headerName: "Mobile", width: 130 },
+                { field: "email", headerName: "Email", width: 150 },
+                { field: "sport", headerName: "Turnament", width: 120 },
+                { field: "location", width: 130 },
+                { field: "startDate", headerName: "Start Date", width: 120 },
+                { field: "endDate", headerName: "End Date", width: 120 },
+                { field: "price", headerName: "Price", width: 90 },
+                { field: "bookingStatus", headerName: "Booking Status", width: 140 },
+                {
+                    headerName: "Actions",
+                    cellRenderer: function (params) {
+                        // Create the container element for buttons
+                        var container = document.createElement("div");
+
+                        // Create the "Action" button
+                        var actionButton = document.createElement("button");
+                        actionButton.innerHTML = "Approve";
+                        actionButton.addEventListener("click", function () {
+                            // Handle action button click
+                            var rowData = params.data;
+                            var id = rowData.id; // Assuming the ID field name is 'id'
+                            // Perform AJAX request to send ID to the controller
+                            $.ajax({
+                                url: '/Admin/ApproveMethod',
+                                type: 'POST',
+                                data: { id: id },
+                                success: function (response) {
+                                    // Handle success response
+                                    alert(response.message);
+                                    //alert("Approved Turnament Booking Successfully:");
+                                },
+                                error: function () {
+                                    // Handle error
+                                    console.error("An error occurred while approving the record with ID");
+                                }
+                            });
+                        });
+
+                        // Create the "Remove" button
+                        var removeButton = document.createElement("button");
+                        removeButton.innerHTML = "Remove";
+                        removeButton.addEventListener("click", function () {
+                            // Handle remove button click
+                            var rowData = params.data;
+                            var id = rowData.id;
+                            // Perform AJAX request to remove the record
+                            $.ajax({
+                                url: '/Admin/RemoveApproval',
+                                type: 'POST',
+                                data: { id: id },
+                                success: function (response) {
+                                    // Handle success response
+                                    alert(response.message);
+                                    location.reload();
+                                },
+                                error: function () {
+                                    // Handle error
+                                    alert(response.message);
+                                }
+                            });
+                        });
+                        // Append buttons to the container
+                        container.appendChild(actionButton);
+                        container.appendChild(removeButton);
+                        // Return the container element
+                        return container;
+                    },
+                    width: 180 
+                }
+           
+            ],
+            columnHoverHighlight: true,
+            rowSelection: true,
+            pagination: true,
+            paginationPageSize: 10,
+            defaultColDef: {
+                filter: true,
+            }
+        };
+
+        function showData() {
+            $.ajax({
+                url: "/Admin/ViewTurnamentBooking",
+                method: "GET",
+                dataType: "json",
+                success: function (data) {
+                    gridOptions.api.setRowData(data);
+                }
+            });
+        }
+        showData();
+        const myGridElement = document.querySelector('#myGrid');
+        new agGrid.Grid(myGridElement, gridOptions);
+    </script>
+</body>
+</html>

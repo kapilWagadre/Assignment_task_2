@@ -40,9 +40,9 @@
             margin-left: 300px;
         }
 
-        .btn {
+        .btn-medium {
             margin-top: 34px;
-            margin-left: 140px;
+            margin-left: 70px;
             width: 150px;
             height: 40px;
             background-color: lightskyblue;
@@ -84,16 +84,34 @@
         }
 
         .dropdown-toggle {
-            margin-right:30px;
-        }
-
-        .lefthead
-        {
             margin-right: 30px;
         }
+
+        .lefthead {
+            margin-right: 10px;
+        }
+
+        .popup {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 10px;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .popup-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 50%;
+            max-width: 500px;
+        }
     </style>
-
-
 
 </head>
 <body>
@@ -105,7 +123,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <div class="navbar-nav ml-auto">
-                
+
                 <div class="nav-item active dropdown">
                     <a class="nav-link dropdown-toggle bi bi-person-gear" href="#" id="navbarAccountDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Account
@@ -125,13 +143,26 @@
                 </div>
 
                 <div class="nav-item lefthead active">
-                    <a class="nav-link bi bi-house h-5 w-5 " href="/Add/HomeIndex"> Home</a>
+                    <a class="nav-link bi bi-calendar-x h-5 w-5 " id="cancelBtn"> Cancel Booking</a>
                 </div>
                 <div class="nav-item active">
                     <a id="logoutLink" class="nav-link  bi bi-lock h-5 w-5" href="/Home/Logout"> Logout</a>
                 </div>
 
             </div>
+        </div>
+        <div id="popupBox" class="popup">
+            <form asp-action="CancelBooking">
+                <div class="popup-content">
+                    <span class="close">&times;</span>
+                    <h2 class="heading">Search Booking Details</h2><br /><hr />
+                    <input class="mt-2 form-control" type="text" id="name" name="customerName" placeholder="Enter Name"><br />
+                    <input class="mt-2 form-control" type="text" id="contactNumber" name="customerNumber" placeholder="Enter Contact Number"><br />
+                    <input class="mt-2 form-control" type="text" id="groundName" name="groundName" placeholder="Enter Ground Name"><br />
+                    <input class="mt-2 form-control" type="date" id="date" name="date"><br />
+                    <button type="submit" id="searchBtn" class="mt-2 btn btn-primary">Search</button>
+                </div>
+            </form>
         </div>
     </nav>
 
@@ -146,6 +177,71 @@
                 <h5 class="details fw-bold">IS JUST A TAP AWAY</h5>
                 <div>
                     <a id="Button" href="/Add/HomePage" class="btn btn-medium btn-dark text-uppercase btn-rounded">To Book Venue</a>
+                    <a id="tournamentBtn" class="btn btn-medium btn-dark text-uppercase btn-rounded" data-toggle="modal" data-target="#tournamentModal">
+                        Turnament
+                    </a>
+                </div>
+
+                @* model *@
+                <div class="modal fade" id="tournamentModal" tabindex="-1" role="dialog" aria-labelledby="tournamentModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="tournamentModalLabel">Tournament Ground Booking Form</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <!-- Your form content goes here -->
+                                <form id="tournamentForm" asp-action="TurnamentBooking">
+                                   <div class="row">
+                                        <div class="col-6 form-group">
+                                            <label for="customerName">Enter Name</label>
+                                            <input type="text" class="form-control" id="customerName" name="customerName" placeholder="Enter Your Name">
+                                        </div>
+                                        <div class="col-6 form-group">
+                                            <label for="number">Enter Number</label>
+                                            <input type="text" class="form-control" id="number" name="number" placeholder="Enter Your Number">
+                                        </div>
+                                   </div>
+                                   
+                                    <!-- Email input -->
+                                    <div class="form-group"> 
+                                        <label for="email">Enter Email</label>
+                                        <input type="email" class="form-control" id="email" name="email" placeholder="Enter Your Email">
+                                    </div>
+                                  
+                                    <div class="form-group">
+                                        <label for="sport">Select Sports Name</label>
+                                        <select class="form-control" id="sport" name="sport">
+                                            <option value="" disabled selected>------ Select Sports Turnament ------</option>
+                                            <option value="Cricket Turnament">Cricket</option>
+                                            <option value="Footboll Turnament">Footboll</option>
+                                            <option value="Hockey Turnament">Hockey</option>
+                                            <option value="Badminton Turnament">Badminton</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-6 form-group">
+                                            <label for="startdate">Start Date</label>
+                                            <input type="date" class="form-control" id="startdate" name="startdate" placeholder="Enter Start Date" required min="@DateTime.Today.ToString("yyyy-MM-dd")">
+                                        </div>
+                                        <div class="col-6 form-group">
+                                            <label for="enddate">End Date</label>
+                                            <input type="date" class="form-control" id="enddate" name="enddate" placeholder="Enter End Date" required min="@DateTime.Today.ToString("yyyy-MM-dd")">
+                                        </div>
+                                    </div>
+                                    <h5>Price:<span id ="price"> </span>/- </h5>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="submit" id="submitTournament" class="btn btn-primary">Submit</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
             </div>
@@ -184,7 +280,7 @@
             <div class="">
                 <img src="https://km-landing.s3.ap-south-1.amazonaws.com/Images/km-homePageNew/non-textCr.png" class="card-img-top" alt="Image 1">
                 <div class="card-body ml-4">
-                    <h5 class="card-title ml-5">Cricket</h5>
+                    <h5 class="card-title ml-5"><a href="TurfGround?description=Green Cricket Turf">Cricket</a></h5>
 
                 </div>
             </div>
@@ -194,7 +290,7 @@
             <div class="">
                 <img src="https://km-landing.s3.ap-south-1.amazonaws.com/Images/km-homePageNew/non-textFt.png" class="card-img-top" alt="Image 2">
                 <div class="card-body  ml-4">
-                    <h5 class="card-title  ml-5">Football</h5>
+                    <h5 class="card-title ml-5"><a href="TurfGround?description=Green Football Turf">Football</a></h5>
                 </div>
             </div>
         </div>
@@ -203,7 +299,7 @@
 
             <img src="~/css/img/Hocman1.jpg" style="height:290px; class="card-img-top" alt="Image 3">
             <div class="card-body  ml-4">
-                <h5 class="card-title  ml-5">Hockey</h5>
+                <h5 class="card-title ml-5"><a href="TurfGround?description=Green Hockey Turf">Hockey</a></h5>
             </div>
 
         </div>
@@ -212,7 +308,7 @@
             <div class="">
                 <img src="https://km-landing.s3.ap-south-1.amazonaws.com/Images/km-homePageNew/non-textBdm.png" class="card-img-top" alt="Image 4">
                 <div class="card-body  ml-4">
-                    <h5 class="card-title  ml-5">Badminton</h5>
+                    <h5 class="card-title ml-5"><a href="TurfGround?description=Green Badminton Turf">Badminton</a></h5>
                 </div>
             </div>
         </div>
@@ -254,17 +350,108 @@
     </footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', (event) => {
-            document.getElementById('logoutLink').addEventListener('click', function (e) {
-                e.preventDefault();
-                const logoutConfirmed = confirm('Are you sure you want to log out?');
-                if (logoutConfirmed) {
-
-                    window.location.href = this.href;
-                }
-
+        $(document).ready(function () {
+            $('#tournamentBtn').click(function () {
+                $('#tournamentModal').modal('show');
             });
+
+            $("#submitTournament").click(function (e) {
+                e.preventDefault(); // Prevent default form submission behavior
+                debugger;
+                var formData = {
+                    customerName: $('#customerName').val(),
+                    number: $('#number').val(),
+                    email: $('#email').val(),
+                    sport: $('#sport').val(),
+                    startdate: $('#startdate').val(),
+                    enddate: $('#enddate').val(),
+                    price: $('#price').text()
+                };
+                // Perform AJAX form submission
+                $.ajax({
+                    url: '/Add/TurnamentBooking', 
+                    type: 'POST',
+                    data: formData,
+                    success: function (response) {
+                        alert(response.message);
+                        window.location.href = 'HomeIndex';
+                    },
+                    error: function () {
+                        // Handle error
+                        alert("An error occurred while processing the request");
+                    }
+                });
+            });
+
         });
+        // document.addEventListener('DOMContentLoaded', (event) => {
+        //     document.getElementById('logoutLink').addEventListener('click', function (e) {
+        //         e.preventDefault();
+        //         const logoutConfirmed = confirm('Are you sure you want to log out?');
+        //         if (logoutConfirmed) {
+
+        //             window.location.href = this.href;
+        //         }
+
+        //     });
+        // });
+
+        var cancelBtn = document.getElementById('cancelBtn');
+        var popup = document.getElementById('popupBox');
+        var closeBtn = document.querySelector('.close');
+
+        function showPopup() {
+            popup.style.display = 'block';
+        }
+
+        function closePopup() {
+            popup.style.display = 'none';
+        }
+
+        cancelBtn.addEventListener('click', showPopup);
+
+        // Event listener for close button click
+        closeBtn.addEventListener('click', closePopup);
+
+        // Close the popup when user clicks outside of it
+        window.addEventListener('click', function (event) {
+            if (event.target == popup) {
+                closePopup();
+                location.reload();
+            }
+        });
+
+        document.getElementById("startdate").addEventListener("change", function () {
+            var startDate = new Date(document.getElementById("startdate").value);
+            var endDateInput = document.getElementById("enddate");
+
+            // Set the minimum selectable date for the end date input to be one day after the selected start date
+            startDate.setDate(startDate.getDate() + 1);
+            var minEndDate = startDate.toISOString().split('T')[0]; // Format the date as YYYY-MM-DD
+
+            // Update the min attribute of the end date input
+            endDateInput.setAttribute("min", minEndDate);
+        });
+
+        //Price of turnament
+        document.getElementById("startdate").addEventListener("change", updatePrice);
+        document.getElementById("enddate").addEventListener("change", updatePrice);
+
+        function updatePrice() {
+            var startDate = new Date(document.getElementById("startdate").value);
+            var endDate = new Date(document.getElementById("enddate").value);
+
+            // Calculate the number of days between the start and end dates
+            var timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
+            var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+            // Calculate the price based on the number of days
+            var price = 6000 * diffDays;
+
+            // Display the calculated price
+            document.getElementById("price").textContent = price ;
+        }
+   
     </script>
 </body>
 </html>

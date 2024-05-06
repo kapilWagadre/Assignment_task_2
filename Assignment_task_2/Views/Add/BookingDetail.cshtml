@@ -9,10 +9,13 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" integrity="sha384-4LISF5TTJX/fLmGSxO53rV4miRxdg84mZsxmO8Rx5jGtp/LbrixFETvWa5a6sESd" crossorigin="anonymous">
 
     <style>
+        :root {
+            --primary-hue: 180; /* Initial hue value */
+        }
         .heading {
              
             text-align:center;
-            background-color:darkturquoise;
+            background: linear-gradient(180deg, hsl(var(--primary-hue), 100%, 80%), hsl(calc(var(--primary-hue) + 180), 100%, 80%));
             
         }
 
@@ -24,7 +27,7 @@
             margin-top: 70px;
             width:900px;
             margin-left:190px;
-            background-color:lightblue;
+            background: linear-gradient(180deg, hsl(var(--primary-hue), 100%, 80%), hsl(calc(var(--primary-hue) + 180), 100%, 80%));
         }
 
         .btn-primary {
@@ -135,6 +138,7 @@
         function printPage() {
             window.print();
             window.location.href = '/Add/HomePage';
+
             // location.reload();
         }
         

@@ -110,7 +110,7 @@ namespace Assignment_task_2.Controllers
                 TempData["UserDetails"] = JsonConvert.SerializeObject(userViewModel);
 
                 return RedirectToAction("HomeIndex", "Add");
-            }
+            } 
         
             else
             {
@@ -211,7 +211,6 @@ namespace Assignment_task_2.Controllers
                     if (model.CurrentPassword == user.password)
                     {
                         user.password = model.NewPassword;
-
                         _context.SaveChanges(); 
                         TempData["SuccessMessage"] = "Password changed successfully.";
                         return RedirectToAction("Index1");

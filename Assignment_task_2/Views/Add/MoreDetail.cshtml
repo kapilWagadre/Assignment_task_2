@@ -136,7 +136,7 @@
                 <form>
                     <div class="form-group farm mt-2">
                         <label for="date" class="fw-bold">Select Date:</label>
-                        <input type="date" id="date" name="date" class="form-control" required>
+                        <input type="date" id="date" name="date" class="form-control" required min="@DateTime.Today.ToString("yyyy-MM-dd")">
                     </div>
 
                     @*  <div class="form-group farm">
@@ -162,12 +162,12 @@
                     <div>
 
                         <a onclick="checkAvailability()" class=" buttun btn btn-info">Check Availability</a>
-                        @*  <a id="myButton" class=" buttun btn btn-success">check availability</a> *@
+                    @*  <a id="myButton" class=" buttun btn btn-success">check availability</a> *@
                     </div>
                 </form>
                 <ol class="form mt-4">
                     <li> Choose a date above to see available times to Select Your Favorite Slot. </li>
-                    <li>We don't provide football and cricket kit or any other Sports kit.</li>
+                    <li>We don't provide Football , Cricket kit or any other Sports kit.</li>
                 </ol>
             </div>
         </div><hr />
